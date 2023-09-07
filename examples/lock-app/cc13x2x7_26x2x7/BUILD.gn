@@ -79,6 +79,7 @@ ti_simplelink_executable("lock_app") {
     "${project_dir}/src/LockManager.cpp",
     "${project_dir}/src/ZclCallbacks.cpp",
     "${project_dir}/src/main.cpp",
+    "${project_dir}/src/UserBLE.c",
   ]
 
   deps = [

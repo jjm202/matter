@@ -471,10 +471,19 @@ void AppTask::DispatchEvent(AppEvent * aEvent)
     case AppEvent::kEventType_ButtonRight:
         if (AppEvent::kAppEventButtonType_Clicked == aEvent->ButtonEvent.Type)
         {
+            PLAT_LOG("User BLE invoked")
+            ConnectivityMgr().SetBLEAdvertisingEnabled(false);
+            chip::DeviceLayer::Internal::UserBLESetAdvState(1);
+            ConnectivityMgr().SetBLEAdvertisingEnabled(true); 
+
             LockMgr().InitiateAction(LockManager::LOCK_ACTION);
+            //PLAT_LOG("User BLE invoked")
         }
         else if (AppEvent::kAppEventButtonType_LongClicked == aEvent->ButtonEvent.Type)
         {
+            // inform the manager this is Matter commissioning
+            chip::DeviceLayer::Internal::UserBLESetAdvState(0);
+
             // Enable BLE advertisements
             if (!ConnectivityMgr().IsBLEAdvertisingEnabled())
             {
